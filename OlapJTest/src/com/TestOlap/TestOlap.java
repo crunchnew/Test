@@ -60,7 +60,7 @@ public class TestOlap {
 
 	    String str;
 	    String str_lnz;
-	    Boolean connectLnz =  true;
+	    Boolean connectLnz =  false;
 
 	    OlapConnection olapConnection;
 	    OlapStatement statement ;
@@ -127,7 +127,7 @@ public class TestOlap {
 	    		  "CubeR1!");
 
 	      Connection connection = DriverManager.getConnection(
-	          "jdbc:xmla:Server=http://localhost/OLAP/msmdpump.dll;Catalog=AdventureWorks SSAS",
+	          "jdbc:xmla:Server=http://localhost/OLAP2/msmdpump.dll;Catalog=AdventureWorks SSAS",
 	    		  "OLAP",
 	    		  "0815Pwd!");
 
@@ -148,6 +148,7 @@ public class TestOlap {
 	      endTime = System.currentTimeMillis() - startTime;
 	      startTime = System.currentTimeMillis();
 	      
+if (2 == 2) {  
 		  for (Position row : cellSet.getAxes().get(1)) {
 		    
 		    for (Position column : cellSet.getAxes().get(0)) {
@@ -173,6 +174,7 @@ public class TestOlap {
 	          System.out.println();
 		    }
 		  }
+}		  
 	    } catch (Exception e) {
 		  		System.out.println(e.getMessage());
 	    }

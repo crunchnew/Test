@@ -2,9 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="D:/JavaEE/olap4j-1.1.0/lib/olap4j-1.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/JavaEE/olap4j-1.1.0/lib/olap4j-tck-1.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/JavaEE/olap4j-1.1.0/lib/olap4j-xmla-1.1.0.jar"/>
-	<classpathentry kind="lib" path="D:/JavaEE/olap4j-1.1.0/lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="D:/JavaEE/Olap4j-2/olap4j-1.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/JavaEE/Olap4j-2/olap4j-xmla-1.2.0.jar"/>
+	<classpathentry kind="lib" path="D:/JavaEE/Olap4j-2/xercesImpl-2.8.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

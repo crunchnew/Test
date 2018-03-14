@@ -1,3 +1,4 @@
-# Olap4J
+# Olap4J.
 
 For GitHub temp project
+
