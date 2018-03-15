@@ -94,6 +94,7 @@ public class TestOlap {
 	      "ON ROWS " +  
 	      "FROM [AS_BIDWStar_auto_cube]" ;
 	    
+	    
 	    str_lnz = 
 	        " SELECT NON EMPTY                                          " +                          
 	            " {                                                     " +
