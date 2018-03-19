@@ -46,5 +46,34 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <version>1.1.0</version>
 </dependency>
  -->
+ 
+ 	<!-- https://mvnrepository.com/artifact/com.mchange/mchange-commons-java -->
+	<dependency>
+	    <groupId>com.mchange</groupId>
+	    <artifactId>mchange-commons-java</artifactId>
+	    <version>0.2.15</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/c3p0/c3p0 -->
+	<dependency>
+	    <groupId>c3p0</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>0.9.1.2</version>
+	</dependency>
+
+	<dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>2.7.8</version>
+    </dependency>
+
+	<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+	<dependency>
+	    <groupId>commons-dbcp</groupId>
+	    <artifactId>commons-dbcp</artifactId>
+	    <version>1.4</version>
+	</dependency>
+
+
 	</dependencies>
 </project>
