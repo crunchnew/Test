@@ -46,9 +46,8 @@ public class TestOlap {
   public static String foo(final double value) {
     DecimalFormat formatter;
 
-     if (value - (int) value > 0.0) {
-      formatter = new DecimalFormat("0.00");
-	 } else {
+     if (value - (int) value > 0.0) { formatter = new DecimalFormat("0.00");
+     } else {
        formatter = new DecimalFormat("0");
      }
 
@@ -87,6 +86,10 @@ public class TestOlap {
 	          + "[Category],[Employee].[Employees].[Employee Sort],[Employee].[Employees].[Employees] "
 	          + "ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS";
 
+	     //rowery
+	     str = "SELECT {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount]} DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS";
+	     
+	     
 	      str_lnz = "SELECT {[Measures].[AlarmCode (AVG)],[Measures].[AlarmError Count],[Measures].[AlarmOK Count],[Measures].[AlarmUndefined Count]}"
 	          + " DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , "
 	          + "NON EMPTY Hierarchize({DrilldownLevel({[Dim MaterialWeight].[MaterialWeight Hierarchy].[All]},,,INCLUDE_CALC_MEMBERS)}) "
@@ -191,7 +194,7 @@ public class TestOlap {
 	         cellSet = statement.executeOlapQuery(str);
 	       break;
 	       
-	       case 4:
+	       case 4: //  Best perfomence 
 	         config = new HikariConfig();
 	         config.setJdbcUrl("jdbc:xmla:Server=http://localhost/OLAP2/msmdpump.dll;Catalog=AdventureWorks SSAS");
            config.setUsername("OLAP");
@@ -211,8 +214,8 @@ public class TestOlap {
            config.addDataSourceProperty("cachePrepStmts", "true");
            config.addDataSourceProperty("prepStmtCacheSize", "250");
            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+           
 	       break;
-	       
 	       
 	       case 5:
 	         GenericObjectPool connectionPool =
@@ -249,28 +252,28 @@ if (2 == 2) {
 		      for (Member member : row.getMembers()) {
 		  	  	System.out.println("Row Member " + member.getUniqueName());
 		  	    System.out.println("Row Member [" + member.getName() + "]");
-		  	  //System.out.println(member.);
-
-		  	  if (member.getChildMemberCount() > 0) {
-		  	    collectionOlap(member);
+		  	    
+//		  	    if (member.getChildMemberCount() > 0) {
+//		  	      collectionOlap(member);
+//		  	    }
 		  	  }
-		  	}
 		      
-		  	for (Member member : column.getMembers()) {
-		  	   System.out.println("Column Member" + member.getUniqueName());
-		  	   System.out.println("Column Member [" + member.getName() + "]");
-		  	}
-		  	final Cell cell = cellSet.getCell(column, row);
-		  	// System.out.println("Value ["+ cell.getForm attedValue()+ "]");
-		  	// System.out.println("Value ["+ cell.getValue().toString() + "]");
-		  	System.out.println("Value [" + foo(cell.getDoubleValue()) + "]");
-	          System.out.println();
-		    }
-		    
+		  	  for (Member member : column.getMembers()) {
+		  	     System.out.println("Column Member" + member.getUniqueName());
+		  	     System.out.println("Column Member [" + member.getName() + "]");
+		  	  }
+		  	
+		  	  final Cell cell = cellSet.getCell(column, row);
+		  	  //System.out.println("Value ["+ cell.getFormattedValue()+ "]");
+		  	  //System.out.println("Value 2 ["+ cell.getValue().toString() + "]");
+		  	  System.out.println("Value 3 [" + foo(cell.getDoubleValue()) + "]");
+	        System.out.println("============= END OF ROW =============");
+		    }		    
 		  }
 }		  
 	    
-
+  //====================================================
+  //====================================================
 	   
 	   } catch (Exception e) {
 		  		System.out.println(e.getMessage());
