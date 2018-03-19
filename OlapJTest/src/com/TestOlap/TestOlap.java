@@ -16,6 +16,7 @@ import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
+
 import org.olap4j.Cell;
 import org.olap4j.CellSet;
 import org.olap4j.CellSetAxis;
@@ -126,7 +127,7 @@ public class TestOlap {
 	              " , [Dim Date].[Date Hierarchy].[Quarter].&[2017.Q2]    " +
 	              "  }                                                    " ;
 
-	    int connectLnz =  5;
+	    int connectLnz =  4;
 
 	    OlapConnection olapConnection;
 	    OlapStatement statement = null ;
@@ -186,6 +187,7 @@ public class TestOlap {
 	         connection = cpds.getConnection();
 	         OlapWrapper wrapper = (OlapWrapper) connection;
 	         olapConnection = wrapper.unwrap(OlapConnection.class);
+	         statement = olapConnection.createStatement();
 	         cellSet = statement.executeOlapQuery(str);
 	       break;
 	       
@@ -195,6 +197,7 @@ public class TestOlap {
            config.setUsername("OLAP");
            config.setPassword("0815Pwd!");
 
+           config.setMinimumIdle(2);
            config.setMaximumPoolSize(3);
            config.setAutoCommit(false);
            
@@ -202,11 +205,12 @@ public class TestOlap {
            connection = dataSource.getConnection();
           
            olapConnection = connection.unwrap(OlapConnection.class);
+           statement = olapConnection.createStatement();
            cellSet = statement.executeOlapQuery(str);
            
-      //     config.addDataSourceProperty("cachePrepStmts", "true");
-      //     config.addDataSourceProperty("prepStmtCacheSize", "250");
-      //     config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+           config.addDataSourceProperty("cachePrepStmts", "true");
+           config.addDataSourceProperty("prepStmtCacheSize", "250");
+           config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 	       break;
 	       
 	       
@@ -227,6 +231,7 @@ public class TestOlap {
 	     connection = dataSource1.getConnection();
 	     olapConnection = connection.unwrap(OlapConnection.class);
 	     statement = olapConnection.createStatement();
+	     cellSet = statement.executeOlapQuery(str);
 	       break;
 	       
 	       default:
