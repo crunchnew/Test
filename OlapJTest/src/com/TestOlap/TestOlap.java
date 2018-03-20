@@ -87,8 +87,10 @@ public class TestOlap {
 	          + "ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS";
 
 	     //rowery
-	     str = "SELECT {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount]} DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS";
-	     
+	     str =
+	         //"SELECT NON EMPTY CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
+	         "SELECT NON EMPTY CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Month].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Quarter].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount],[Measures].[Sales Amount Forecast]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Ship Date].[Month].[Month].[Calendar Quarter],[Ship Date].[Month].[Month].[Fiscal Quarter],[Ship Date].[Calendar Quarter].[Calendar Quarter].[Calendar Year] ON COLUMNS , NON EMPTY CrossJoin(Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)), Hierarchize(DrilldownMember({{DrilldownLevel({[Product].[Size by Color].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Size by Color].[Color].&[Black]},,,INCLUDE_CALC_MEMBERS))) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
+	         ;
 	     
 	      str_lnz = "SELECT {[Measures].[AlarmCode (AVG)],[Measures].[AlarmError Count],[Measures].[AlarmOK Count],[Measures].[AlarmUndefined Count]}"
 	          + " DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , "
@@ -200,8 +202,8 @@ public class TestOlap {
            config.setUsername("OLAP");
            config.setPassword("0815Pwd!");
 
-           config.setMinimumIdle(2);
-           config.setMaximumPoolSize(3);
+           config.setMinimumIdle(1);
+           config.setMaximumPoolSize(2);
            config.setAutoCommit(false);
            
            DataSource dataSource = new HikariDataSource(config);
@@ -245,17 +247,17 @@ public class TestOlap {
 	    startTime = System.currentTimeMillis();
 	      
 if (2 == 2) {  
+  
+      int i = 0;
+      int j = 0;
 		  for (Position row : cellSet.getAxes().get(1)) {
-		    
+		    i++;
 		    for (Position column : cellSet.getAxes().get(0)) {
-
+		      j++;
 		      for (Member member : row.getMembers()) {
 		  	  	System.out.println("Row Member " + member.getUniqueName());
 		  	    System.out.println("Row Member [" + member.getName() + "]");
 		  	    
-//		  	    if (member.getChildMemberCount() > 0) {
-//		  	      collectionOlap(member);
-//		  	    }
 		  	  }
 		      
 		  	  for (Member member : column.getMembers()) {
@@ -263,12 +265,16 @@ if (2 == 2) {
 		  	     System.out.println("Column Member [" + member.getName() + "]");
 		  	  }
 		  	
+		  	  
 		  	  final Cell cell = cellSet.getCell(column, row);
-		  	  //System.out.println("Value ["+ cell.getFormattedValue()+ "]");
-		  	  //System.out.println("Value 2 ["+ cell.getValue().toString() + "]");
-		  	  System.out.println("Value 3 [" + foo(cell.getDoubleValue()) + "]");
-	        System.out.println("============= END OF ROW =============");
-		    }		    
+		  	  if ( cell.getValue() != null) {
+		  	    System.out.println("Value 3 [" + foo(cell.getDoubleValue()) + "]" );
+		  	  } else {
+		  	    System.out.println("Value 3 [ EMPTY ] ]" );
+		  	  }
+		  	  System.out.println("============= END OF ROW =============" + " [" + i + "," + j + "]");
+		    } 
+		    j = 0;
 		  }
 }		  
 	    
