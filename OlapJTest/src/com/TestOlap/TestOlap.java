@@ -3,10 +3,12 @@
  */
 package com.TestOlap;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.DecimalFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -16,16 +18,18 @@ import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
-
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.olap4j.Cell;
 import org.olap4j.CellSet;
-import org.olap4j.CellSetAxis;
 import org.olap4j.OlapConnection;
 import org.olap4j.OlapException;
 import org.olap4j.OlapStatement;
 import org.olap4j.OlapWrapper;
 import org.olap4j.Position;
 import org.olap4j.metadata.Member;
+
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.zaxxer.hikari.HikariConfig;
@@ -89,7 +93,8 @@ public class TestOlap {
 	     //rowery
 	     str =
 	         //"SELECT NON EMPTY CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
-	         "SELECT NON EMPTY CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Month].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Quarter].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount],[Measures].[Sales Amount Forecast]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Ship Date].[Month].[Month].[Calendar Quarter],[Ship Date].[Month].[Month].[Fiscal Quarter],[Ship Date].[Calendar Quarter].[Calendar Quarter].[Calendar Year] ON COLUMNS , NON EMPTY CrossJoin(Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)), Hierarchize(DrilldownMember({{DrilldownLevel({[Product].[Size by Color].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Size by Color].[Color].&[Black]},,,INCLUDE_CALC_MEMBERS))) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
+	         //"SELECT NON EMPTY CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Month].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Quarter].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount],[Measures].[Sales Amount Forecast]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Ship Date].[Month].[Month].[Calendar Quarter],[Ship Date].[Month].[Month].[Fiscal Quarter],[Ship Date].[Calendar Quarter].[Calendar Quarter].[Calendar Year] ON COLUMNS , NON EMPTY CrossJoin(Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)), Hierarchize(DrilldownMember({{DrilldownLevel({[Product].[Size by Color].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Size by Color].[Color].&[Black]},,,INCLUDE_CALC_MEMBERS))) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
+	         "SELECT NON EMPTY Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize({DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON ROWS  FROM [AdventureWorks] WHERE ([Measures].[Internet Order Quantity]) CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
 	         ;
 	     
 	      str_lnz = "SELECT {[Measures].[AlarmCode (AVG)],[Measures].[AlarmError Count],[Measures].[AlarmOK Count],[Measures].[AlarmUndefined Count]}"
@@ -197,6 +202,7 @@ public class TestOlap {
 	       break;
 	       
 	       case 4: //  Best perfomence 
+	         
 	         config = new HikariConfig();
 	         config.setJdbcUrl("jdbc:xmla:Server=http://localhost/OLAP2/msmdpump.dll;Catalog=AdventureWorks SSAS");
            config.setUsername("OLAP");
@@ -220,10 +226,8 @@ public class TestOlap {
 	       break;
 	       
 	       case 5:
-	         GenericObjectPool connectionPool =
-	         new GenericObjectPool(null);
-	     ConnectionFactory connectionFactory =
-	         new DriverManagerConnectionFactory(
+	         GenericObjectPool connectionPool = new GenericObjectPool(null);
+	         ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
 	             "jdbc:xmla:Server=http://localhost/OLAP2/msmdpump.dll;Catalog=AdventureWorks SSAS"
 	             ,new Properties());
 	     PoolableConnectionFactory poolableConnectionFactory =
@@ -245,51 +249,123 @@ public class TestOlap {
 	     	      
 	    endTime = System.currentTimeMillis() - startTime;
 	    startTime = System.currentTimeMillis();
-	      
+	    List<CubeCell> cubeCells = new ArrayList<>();   
+	    
 if (2 == 2) {  
   
-      int i = 0;
-      int j = 0;
+     
+      
 		  for (Position row : cellSet.getAxes().get(1)) {
-		    i++;
+		    
 		    for (Position column : cellSet.getAxes().get(0)) {
-		      j++;
+
+		      List<String> rows = new ArrayList<>();
+		      List<String> columns = new ArrayList<>();
+		      CubeCell cubeCell = new CubeCell();
+		      
 		      for (Member member : row.getMembers()) {
-		  	  	System.out.println("Row Member " + member.getUniqueName());
-		  	    System.out.println("Row Member [" + member.getName() + "]");
-		  	    
+		  	  	//System.out.println("Row Member " + member.getUniqueName());
+            rows.add(member.getUniqueName());  
+
+		  	    //System.out.println("Row Member [" + member.getName() + "]");
+		  	    rows.add(member.getName());  
 		  	  }
 		      
 		  	  for (Member member : column.getMembers()) {
-		  	     System.out.println("Column Member" + member.getUniqueName());
-		  	     System.out.println("Column Member [" + member.getName() + "]");
+		  	     //System.out.println("Column Member" + member.getUniqueName());
+		  	     columns.add(member.getUniqueName());
+		  	     //System.out.println("Column Member [" + member.getName() + "]");
+		  	     columns.add(member.getName());
 		  	  }
 		  	
-		  	  
 		  	  final Cell cell = cellSet.getCell(column, row);
 		  	  if ( cell.getValue() != null) {
-		  	    System.out.println("Value 3 [" + foo(cell.getDoubleValue()) + "]" );
+		  	    //System.out.println("Value [" + foo(cell.getDoubleValue()) + "]" );
+		  	    cubeCell.setValue(foo(cell.getDoubleValue()));
 		  	  } else {
-		  	    System.out.println("Value 3 [ EMPTY ] ]" );
+		  	    //System.out.println("Value [ EMPTY ] " );
+            cubeCell.setValue("EMPTY");		  	    
 		  	  }
-		  	  System.out.println("============= END OF ROW =============" + " [" + i + "," + j + "]");
+		  	  //System.out.println("============= END OF ROW ============= [" + row.getOrdinal() + "," + column.getOrdinal() + "]"  );
+		  	  cubeCell.setColumns(columns);
+		  	  cubeCell.setRow(rows);
+		  	  cubeCell.setRowId(row.getOrdinal());
+		  	  cubeCell.setColumnId(column.getOrdinal());
+		  	  
+		  	  cubeCells.add(cubeCell);
 		    } 
-		    j = 0;
+		   
 		  }
 }		  
 	    
-  //====================================================
-  //====================================================
-	   
+  //======================= JSON
+  
+   ObjectMapper mapper = new ObjectMapper();
+
+   //ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+   
+   mapper.setVisibility(JsonMethod.FIELD, Visibility.ANY);
+   
+   for(CubeCell cubeCell : cubeCells) {
+     
+     String jsonInString = mapper.writeValueAsString(cubeCell);
+     System.out.println(jsonInString);
+   }
+  
+   JsonToFile  jsonFile = new JsonToFile();
+   jsonFile.setCubeCells(cubeCells);
+   jsonFile.jsonToFile();
+      
+  //======================= JSON	   
 	   } catch (Exception e) {
 		  		System.out.println(e.getMessage());
 	    }
-	    
+	   
       endTime_2 = System.currentTimeMillis() - startTime;
       System.out.println(" FIRST [" + endTime + "] SECOND [" + endTime_2 + "]");
-      
       
 	  }
 }
 
+
+class CubeCell {
+  
+  private int rowId;
+  private int columnId;
+  private String value;
+  private List<String> columns;
+  private List<String> row;
+  
+  protected int getRowId() {
+    return rowId;
+  }
+  protected void setRowId(int rowId) {
+    this.rowId = rowId;
+  }
+  protected int getColumnId() {
+    return columnId;
+  }
+  protected void setColumnId(int columnId) {
+    this.columnId = columnId;
+  }
+  protected String getValue() {
+    return value;
+  }
+  protected void setValue(String value) {
+    this.value = value;
+  }
+  protected List<String> getColumns() {
+    return columns;
+  }
+  protected void setColumns(List<String> columns) {
+    this.columns = columns;
+  }
+  protected List<String> getRow() {
+    return row;
+  }
+  protected void setRow(List<String> row) {
+    this.row = row;
+  }
+ 
+}
 
