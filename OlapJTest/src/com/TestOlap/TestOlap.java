@@ -18,9 +18,11 @@ import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
+
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.ObjectMapper;
+
 import org.olap4j.Cell;
 import org.olap4j.CellSet;
 import org.olap4j.OlapConnection;
@@ -167,6 +169,7 @@ public class TestOlap {
 	          olapConnection = connection_lnz.unwrap(OlapConnection.class);
 	          statement = olapConnection.createStatement();
 	          cellSet = statement.executeOlapQuery(str_lnz);        
+
 	       break;
 
 	       case 2:
@@ -199,6 +202,7 @@ public class TestOlap {
 	         olapConnection = wrapper.unwrap(OlapConnection.class);
 	         statement = olapConnection.createStatement();
 	         cellSet = statement.executeOlapQuery(str);
+	         
 	       break;
 	       
 	       case 4: //  Best perfomence 
@@ -253,10 +257,7 @@ public class TestOlap {
 	    
 if (2 == 2) {  
   
-     
-      
 		  for (Position row : cellSet.getAxes().get(1)) {
-		    
 		    for (Position column : cellSet.getAxes().get(0)) {
 
 		      List<String> rows = new ArrayList<>();
@@ -284,7 +285,8 @@ if (2 == 2) {
 		  	    cubeCell.setValue(foo(cell.getDoubleValue()));
 		  	  } else {
 		  	    //System.out.println("Value [ EMPTY ] " );
-            cubeCell.setValue("EMPTY");		  	    
+            cubeCell.setValue("EMPTY");		  
+
 		  	  }
 		  	  //System.out.println("============= END OF ROW ============= [" + row.getOrdinal() + "," + column.getOrdinal() + "]"  );
 		  	  cubeCell.setColumns(columns);
