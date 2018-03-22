@@ -8,11 +8,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonMethod;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.map.ObjectMapper;
-
-
 
 /**
  * @author Primetals 2017 -- Wieslaw Czuber

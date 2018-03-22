@@ -3,7 +3,6 @@
  */
 package com.TestOlap;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.DecimalFormat;
@@ -234,11 +233,8 @@ public class TestOlap {
 	         ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
 	             "jdbc:xmla:Server=http://localhost/OLAP2/msmdpump.dll;Catalog=AdventureWorks SSAS"
 	             ,new Properties());
-	     PoolableConnectionFactory poolableConnectionFactory =
-	         new PoolableConnectionFactory(
-	             connectionFactory, connectionPool, null, null, false, true);
-	     DataSource dataSource1 =
-	         new PoolingDataSource(connectionPool);
+	     PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory( connectionFactory, connectionPool, null, null, false, true);
+	     DataSource dataSource1 = new PoolingDataSource(connectionPool);
 
 
 	     connection = dataSource1.getConnection();
@@ -288,7 +284,9 @@ if (2 == 2) {
             cubeCell.setValue("EMPTY");		  
 
 		  	  }
+		  	  
 		  	  //System.out.println("============= END OF ROW ============= [" + row.getOrdinal() + "," + column.getOrdinal() + "]"  );
+		  	  
 		  	  cubeCell.setColumns(columns);
 		  	  cubeCell.setRow(rows);
 		  	  cubeCell.setRowId(row.getOrdinal());
