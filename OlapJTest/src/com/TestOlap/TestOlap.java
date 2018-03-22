@@ -236,7 +236,6 @@ public class TestOlap {
 	     PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory( connectionFactory, connectionPool, null, null, false, true);
 	     DataSource dataSource1 = new PoolingDataSource(connectionPool);
 
-
 	     connection = dataSource1.getConnection();
 	     olapConnection = connection.unwrap(OlapConnection.class);
 	     statement = olapConnection.createStatement();
