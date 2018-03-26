@@ -36,7 +36,6 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-
 /**
  * @author Z0064FP6
  *
@@ -233,7 +232,7 @@ public class TestOlap {
 	         ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
 	             "jdbc:xmla:Server=http://localhost/OLAP2/msmdpump.dll;Catalog=AdventureWorks SSAS"
 	             ,new Properties());
-	     PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory( connectionFactory, connectionPool, null, null, false, true);
+	     PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory( connectionFactory, connectionPool, null, null, false, true );
 	     DataSource dataSource1 = new PoolingDataSource(connectionPool);
 
 	     connection = dataSource1.getConnection();
@@ -292,8 +291,8 @@ if (2 == 2) {
 		  	  cubeCell.setColumnId(column.getOrdinal());
 		  	  
 		  	  cubeCells.add(cubeCell);
+		  	  
 		    } 
-		   
 		  }
 }		  
 	    
