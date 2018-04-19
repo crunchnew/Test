@@ -58,7 +58,6 @@ public class TestOlap {
      return formatter.format(value);
   }
 
-
   /**
    *@param parentMember some decimal
    *@throws OlapException ble ble
@@ -91,10 +90,11 @@ public class TestOlap {
 	          + "ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS";
 
 	     //rowery
-	     str =
+	     str_lnz =
+	         "SELECT {[Measures].[KPI_CCM_10_SlabInternalQuality [%]]],[Measures].[KPI_CCM_10_SlabInternalQuality [-]] (CNT)],[Measures].[KPI_CCM_12_SlabOverallQuality [%]]],[Measures].[KPI_CCM_12_SlabOverallQuality [-]] (CNT)]} DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY CrossJoin(Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownMember({{DrilldownLevel({[Dim Date].[Date Hierarchy].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Dim Date].[Date Hierarchy].[Year].&[2017]},,,INCLUDE_CALC_MEMBERS)}}, {[Dim Date].[Date Hierarchy].[Year].&[2017].&[2017.Q1]},,,INCLUDE_CALC_MEMBERS)}}, {[Dim Date].[Date Hierarchy].[Year].&[2017].&[2017.Q1].&[2017.01]},,,INCLUDE_CALC_MEMBERS)), Hierarchize({DrilldownLevel({[Dim Grade].[Grade Hierarchy].[All]},,,INCLUDE_CALC_MEMBERS)})) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON ROWS  FROM [AS_BIDWStar_auto_cube] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
 	         //"SELECT NON EMPTY CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
 	         //"SELECT NON EMPTY CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(CrossJoin(Hierarchize({DrilldownLevel({[Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)}), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Fiscal Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Month].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Ship Date].[Calendar Quarter].[All]},,,INCLUDE_CALC_MEMBERS)})), Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)})), {[Measures].[Internet Order Quantity],[Measures].[Internet Sales Amount],[Measures].[Sales Amount Forecast]}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Ship Date].[Month].[Month].[Calendar Quarter],[Ship Date].[Month].[Month].[Fiscal Quarter],[Ship Date].[Calendar Quarter].[Calendar Quarter].[Calendar Year] ON COLUMNS , NON EMPTY CrossJoin(Hierarchize(DrilldownMember({{DrilldownMember({{DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Category].&[1],[Product].[Product by Category].[Category].&[3],[Product].[Product by Category].[Category].&[4]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Product by Category].[Subcategory].&[1],[Product].[Product by Category].[Subcategory].&[26],[Product].[Product by Category].[Subcategory].&[27],[Product].[Product by Category].[Subcategory].&[28],[Product].[Product by Category].[Subcategory].&[29],[Product].[Product by Category].[Subcategory].&[30],[Product].[Product by Category].[Subcategory].&[31],[Product].[Product by Category].[Subcategory].&[32],[Product].[Product by Category].[Subcategory].&[37]},,,INCLUDE_CALC_MEMBERS)), Hierarchize(DrilldownMember({{DrilldownLevel({[Product].[Size by Color].[All]},,,INCLUDE_CALC_MEMBERS)}}, {[Product].[Size by Color].[Color].&[Black]},,,INCLUDE_CALC_MEMBERS))) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME,[Product].[Product by Category].[Subcategory].[Category],[Product].[Product by Category].[Product].[Subcategory] ON ROWS  FROM [AdventureWorks] CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
-	         "SELECT NON EMPTY Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize({DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON ROWS  FROM [AdventureWorks] WHERE ([Measures].[Internet Order Quantity]) CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
+	         //"SELECT NON EMPTY Hierarchize({DrilldownLevel({[Due Date].[Calendar Date].[All]},,,INCLUDE_CALC_MEMBERS)}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY Hierarchize({DrilldownLevel({[Product].[Product by Category].[All]},,,INCLUDE_CALC_MEMBERS)}) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON ROWS  FROM [AdventureWorks] WHERE ([Measures].[Internet Order Quantity]) CELL PROPERTIES VALUE, FORMAT_STRING, LANGUAGE, BACK_COLOR, FORE_COLOR, FONT_FLAGS"
 	         ;
 	     
 	      str_lnz = "SELECT {[Measures].[AlarmCode (AVG)],[Measures].[AlarmError Count],[Measures].[AlarmOK Count],[Measures].[AlarmUndefined Count]}"
@@ -137,6 +137,26 @@ public class TestOlap {
 	              " , [Dim Date].[Date Hierarchy].[Quarter].&[2017.Q2]    " +
 	              "  }                                                    " ;
 
+	      str_lnz =
+	          
+	          "SELECT {[Measures].[KPI_CCM_10_SlabInternalQuality [%]]],                                                                      " +
+	              "        [Measures].[KPI_CCM_12_SlabOverallQuality [%]]],                                                                       " +
+	              "   [Measures].[KPI_CCM_08_SlabScarfOrGrindNonExposed [%]]],                                                                " +
+	              "   [Measures].[KPI_CCM_09_SlabScarfOrGrindExposed [%]]]}                                                                   " +
+	              "   DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS ,                                              " +
+	              "   NON EMPTY CrossJoin(Hierarchize({DrilldownLevel({[Dim Date].[Day].[All]},,,INCLUDE_CALC_MEMBERS)})                      " +
+	              "    , Hierarchize({DrilldownLevel({[Dim Grade].[Grade].[All]},,,INCLUDE_CALC_MEMBERS)})                                    " +
+	              "   ) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,                                                                              " +
+	              "   HIERARCHY_UNIQUE_NAME ON ROWS  FROM (SELECT ({[Dim Grade].[Grade].&[WL980X]}) ON COLUMNS  FROM [AS_BIDWStar_auto_cube]) " +
+	              "   CELL PROPERTIES VALUE " ;
+	      
+	      
+	      str_lnz = 
+	             "SELECT {[Measures].[KPI_CCM_10_SlabInternalQuality [%]]],[Measures].[KPI_CCM_12_SlabOverallQuality [%]]],[Measures].[KPI_CCM_08_SlabScarfOrGrindNonExposed [%]]],[Measures].[KPI_CCM_09_SlabScarfOrGrindExposed [%]]]} DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY CrossJoin(Hierarchize({DrilldownLevel({[Dim Date].[Day].[All]},,,INCLUDE_CALC_MEMBERS)}), Hierarchize({DrilldownLevel({[Dim Grade].[Grade Hierarchy].[All]},,,INCLUDE_CALC_MEMBERS)})) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON ROWS  FROM [AS_BIDWStar_auto_cube] CELL PROPERTIES VALUE"
+	          ;
+	      
+	      str_lnz = "SELECT [Measures].[KPI_CCM_10_SlabInternalQuality_Val1_Sum] ON COLUMNS , [Dim Grade].[Grade Hierarchy].[All] ON ROWS FROM [AS_BIDWStar_auto_cube] ";
+	      
 	    int connectLnz =  4;
 
 	    OlapConnection olapConnection;
@@ -145,7 +165,12 @@ public class TestOlap {
 	    
 	    long startTime = System.currentTimeMillis();
 	    long endTime = 0;
+	    
+	    long startTime_2 = 0;
 	    long endTime_2 = 0;
+	    
+	    long startTime_3 = 0;
+	    long endTime_3 = 0;
 
       Class.forName("org.olap4j.driver.xmla.XmlaOlap4jDriver");
 
@@ -165,9 +190,20 @@ public class TestOlap {
 	             "CubeR1!");
 	         
 	          olapConnection = connection_lnz.unwrap(OlapConnection.class);
+	          
+            	         
 	          statement = olapConnection.createStatement();
-	          cellSet = statement.executeOlapQuery(str_lnz);        
+            str_lnz = 
+                "SELECT {[Measures].[KPI_CCM_10_SlabInternalQuality [%]]],[Measures].[KPI_CCM_12_SlabOverallQuality [%]]],[Measures].[KPI_CCM_08_SlabScarfOrGrindNonExposed [%]]],[Measures].[KPI_CCM_09_SlabScarfOrGrindExposed [%]]]} DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON COLUMNS , NON EMPTY CrossJoin(Hierarchize({DrilldownLevel({[Dim Date].[Day].[All]},,,INCLUDE_CALC_MEMBERS)}), Hierarchize({DrilldownLevel({[Dim Grade].[Grade Hierarchy].[All]},,,INCLUDE_CALC_MEMBERS)})) DIMENSION PROPERTIES PARENT_UNIQUE_NAME,HIERARCHY_UNIQUE_NAME ON ROWS  FROM [AS_BIDWStar_auto_cube] CELL PROPERTIES VALUE"
+             ;
 
+	          cellSet = statement.executeOlapQuery(str_lnz);
+	         
+	          
+	          str_lnz = "SELECT [Measures].[KPI_CCM_10_SlabInternalQuality_Val1_Sum] ON COLUMNS , [Dim Grade].[Grade Hierarchy].[All] ON ROWS FROM [AS_BIDWStar_auto_cube] ";
+	          OlapStatement statement2 = olapConnection.createStatement(); ;
+	          CellSet cellSet2 = statement2.executeOlapQuery(str_lnz);; 
+	          
 	       break;
 
 	       case 2:
@@ -210,8 +246,8 @@ public class TestOlap {
            config.setUsername("OLAP");
            config.setPassword("0815Pwd!");
 
-           config.setMinimumIdle(1);
-           config.setMaximumPoolSize(2);
+           config.setMinimumIdle(25);
+           config.setMaximumPoolSize(50);
            config.setAutoCommit(false);
            
            DataSource dataSource = new HikariDataSource(config);
@@ -245,12 +281,15 @@ public class TestOlap {
          break;
       }
 	     	      
-	    endTime = System.currentTimeMillis() - startTime;
-	    startTime = System.currentTimeMillis();
-	    List<CubeCell> cubeCells = new ArrayList<>();   
-	    
+	    //endTime = System.currentTimeMillis() - startTime;
+	    //startTime = System.currentTimeMillis();
+	     endTime = System.currentTimeMillis() - startTime;
+      
+      startTime_2 = System.currentTimeMillis();
+      List<CubeCell> cubeCells = new ArrayList<>();   
+      
 if (2 == 2) {  
-  
+    
 		  for (Position row : cellSet.getAxes().get(1)) {
 		    for (Position column : cellSet.getAxes().get(0)) {
 
@@ -274,6 +313,8 @@ if (2 == 2) {
 		  	  }
 		  	
 		  	  final Cell cell = cellSet.getCell(column, row);
+		  	  
+		  	  
 		  	  if ( cell.getValue() != null) {
 		  	    //System.out.println("Value [" + foo(cell.getDoubleValue()) + "]" );
 		  	    cubeCell.setValue(foo(cell.getDoubleValue()));
@@ -295,7 +336,9 @@ if (2 == 2) {
 		    } 
 		  }
 }		  
-	    
+endTime_2 = System.currentTimeMillis() - startTime_2;
+
+startTime_3 = System.currentTimeMillis();
   //======================= JSON
   
    ObjectMapper mapper = new ObjectMapper();
@@ -304,11 +347,11 @@ if (2 == 2) {
    
    mapper.setVisibility(JsonMethod.FIELD, Visibility.ANY);
    
-   for(CubeCell cubeCell : cubeCells) {
-     
-     String jsonInString = mapper.writeValueAsString(cubeCell);
-     System.out.println(jsonInString);
-   }
+//   for(CubeCell cubeCell : cubeCells) {
+//     
+//     String jsonInString = mapper.writeValueAsString(cubeCell);
+//     System.out.println(jsonInString);
+//   }
   
    JsonToFile  jsonFile = new JsonToFile();
    jsonFile.setCubeCells(cubeCells);
@@ -317,10 +360,10 @@ if (2 == 2) {
   //======================= JSON	   
 	   } catch (Exception e) {
 		  		System.out.println(e.getMessage());
-	    }
+	   }
 	   
-      endTime_2 = System.currentTimeMillis() - startTime;
-      System.out.println(" FIRST [" + endTime + "] SECOND [" + endTime_2 + "]");
+	   endTime_3 = System.currentTimeMillis() - startTime_3;
+   System.out.println(" FIRST [" + endTime + "] SECOND [" + endTime_2 + "]" + " THIRD [" + endTime_3 + "]");
       
 	  }
 }
@@ -332,7 +375,7 @@ class CubeCell {
   private int columnId;
   private String value;
   private List<String> columns;
-  private List<String> row;
+  private List<String> rows;
   
   protected int getRowId() {
     return rowId;
@@ -359,10 +402,10 @@ class CubeCell {
     this.columns = columns;
   }
   protected List<String> getRow() {
-    return row;
+    return rows;
   }
   protected void setRow(List<String> row) {
-    this.row = row;
+    this.rows = row;
   }
  
 }

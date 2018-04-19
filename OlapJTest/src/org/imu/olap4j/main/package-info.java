@@ -1,7 +1,4 @@
 /**
- * 
- */
-/**
  * @author Primetals 2017 -- Wieslaw Czuber
  *
  */

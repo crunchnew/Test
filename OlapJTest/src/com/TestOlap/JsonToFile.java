@@ -37,12 +37,11 @@ public class JsonToFile {
        //Set pretty printing of json
        
        objectMapper.setVisibility(JsonMethod.FIELD, Visibility.ANY);
-       
        objectMapper.writeValue(new File("d:\\Jaspersoft\\temp\\cells.json"), cubeCells);
+       
        String arrayToJson = objectMapper.writeValueAsString(cubeCells);
        System.out.println("1. Convert List of person objects to JSON :");
        System.out.println(arrayToJson);
      }
-     
      
 }
